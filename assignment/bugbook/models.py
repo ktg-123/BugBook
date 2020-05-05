@@ -44,6 +44,8 @@ class BugDetail(models.Model):
 
 class Comment(models.Model):
     bug=models.ForeignKey(BugDetail,on_delete=models.CASCADE,blank=True,default='')
-    author=models.ForeignKey(User,related_name='comment', on_delete=models.CASCADE)
+    creator=models.ForeignKey(User,related_name='comment', on_delete=models.CASCADE)
     description=RichTextUploadingField()
     comment_date=models.DateTimeField(auto_now_add=True)
+
+    

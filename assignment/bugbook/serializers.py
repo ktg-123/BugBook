@@ -1,27 +1,30 @@
-from rest_framework import seraializers
-from djnano.contrib.auth.models import User
+from rest_framework import serializers
+from django.contrib.auth.models import User
 from .models import AppDetail, BugDetail, Comment
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    apps=serializers.HyperlinkedRelatedField(many=True, view_name='app-detail', read_only=True)
+class UserSerializer(serializers.ModelSerializer):
+    #apps=serializers.HyperlinkedRelatedField(many=True, view_name='app-detail', read_only=True)
     class Meta:
         model=User
-        fields=['url','id', 'username', 'is_staff', 'is_active', 'is_superuser','apps']
+        fields=['id', 'username', 'is_staff', 'is_active', 'is_superuser',]
 
-class AppSerializer(serializers.HyperlinkedModelSerializer):
-    bugs=serializers.HyperlinkedRelatedField(many=True, view_name='bug-detail', read_only=True)
+class AppSerializer(serializers.ModelSerializer):
+    #bugs=serializers.HyperlinkedRelatedField(many=True, view_name='bug-detail', read_only=True)
     creator=serializers.ReadOnlyField(source='creator.username')
     class Meta:
         model=AppDetail
-        fields=['url','app_name','creator','team_members','test_date','wiki','bugs']
+        fields=['id','app_name','creator','team_members','test_date','wiki']
+        #depth=1
 
-class BugSerializer(serializers.HyperlinkedModelSerializer):
+class BugSerializer(serializers.ModelSerializer):
     creator=serializers.ReadOnlyField(source='creator.username')
     class Meta:
         model=BugDetail
-        fields=['url','creator','app_name','summary','bug_status','bug_type','description']
-
+        fields=['id','creator','app_name','summary','status','bugtype','description']
+        #depth=1
 class CommentSerializer(serializers.ModelSerializer):
+    creator=serializers.ReadOnlyField(source='creator.username')
     class Meta:
         model=Comment
-        fields=['bug','author','description','comment_date']
+        fields=['id','bug','creator','description','comment_date']
+        #depth=1
