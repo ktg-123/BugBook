@@ -12,7 +12,7 @@ class AppDetail(models.Model):
     #icon=models.ImageField('')
     wiki=RichTextUploadingField()
     def __str__(self):
-        return self.app_name
+        return "%s by %s" % (self.app_name ,self.creator)
 
 class BugDetail(models.Model):
     creator=models.ForeignKey(User,related_name='bug', on_delete=models.CASCADE)
@@ -40,7 +40,7 @@ class BugDetail(models.Model):
     description=RichTextField()
     report_date=models.DateTimeField(auto_now_add=True)
     def __str__(self):
-        return self.summary
+        return "%s by %s" % (self.summary ,self.creator)
 
 class Comment(models.Model):
     bug=models.ForeignKey(BugDetail,on_delete=models.CASCADE,blank=True,default='')
@@ -48,4 +48,5 @@ class Comment(models.Model):
     description=RichTextUploadingField()
     comment_date=models.DateTimeField(auto_now_add=True)
 
-    
+    def __str__(self):
+        return "%s On %s " % (self.creator ,self.comment_date)

@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework import viewsets, permissions
 from rest_framework.reverse import reverse
 from django.contrib.auth.models import User
-from .permissions import IsOwnerOrReadOnly
+from .permissions import IsOwnerOrReadOnly, ReadOnly, IsTeamOrReadOnly
 
 # Create your views here.
 # @api_view(['GET'])
@@ -17,14 +17,15 @@ from .permissions import IsOwnerOrReadOnly
 #         'comments':reverse('comment-list', request=request, format=format)
 #     })
 
-class UserViewSet(viewsets.ReadOnlyModelViewSet):
+class UserViewSet(viewsets.ModelViewSet):
     queryset=User.objects.all()
     serializer_class=UserSerializer
+    permission_classes=[permissions.IsAdminUser|ReadOnly]
 
 class AppViewSet(viewsets.ModelViewSet):
     queryset=AppDetail.objects.all()
     serializer_class=AppSerializer
-    permission_classes=[permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    permission_classes=[permissions.IsAuthenticatedOrReadOnly, IsTeamOrReadOnly|IsOwnerOrReadOnly|permissions.IsAdminUser]
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
 
