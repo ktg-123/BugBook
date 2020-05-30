@@ -1,0 +1,17 @@
+nav{
+display:flex;
+justify-content:space-around;
+align-items:center;
+background-color: peru;
+color:white;
+padding-top: 1rem;
+margin-bottom: 2rem;
+}
+.nav-links{
+    width:50%;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    list-style: none;
+     
+}

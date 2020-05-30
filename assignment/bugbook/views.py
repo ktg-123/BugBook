@@ -9,6 +9,8 @@ from django.contrib.auth import login
 from rest_framework.response import Response
 from .permissions import IsOwnerOrReadOnly, ReadOnly, IsTeamOrReadOnly
 import json, requests
+from django.http import HttpResponse
+from django.shortcuts import redirect
 # Create your views here.
 # @api_view(['GET'])
 # def api_root(request, format=None):
@@ -22,23 +24,22 @@ import json, requests
 class UserViewSet(viewsets.ModelViewSet):
     queryset=User.objects.all()
     serializer_class=UserSerializer
-    permission_classes=[permissions.IsAdminUser|ReadOnly]
-    @action(methods=['post', 'options','get'], detail=False, url_name="onlogin", url_path="onlogin")
+    #permission_classes=[permissions.IsAdminUser|ReadOnly]
+    @action(methods=['post', 'options','get'], detail=False, url_name="onlogin", url_path="onlogin",permission_classes=[permissions.AllowAny,])
     def on_login(self,request):
-        code=self.request.query_params.get('code')
-        #code=dat["code"]
-        #print(code)
-        
+        code=self.request.data
+        #return HttpResponse(str(code))
         
         url='https://internet.channeli.in/open_auth/token/'
         parameters={
             'client_id':'fgBgJtpe1JtrRU36zyzstoBedUog7ae62BCjieZS',
             'client_secret':'JTF7T932HGebemZAbncwAxeQPVfuf8bVUfeRz8sSe4tRiVEl87x02goOdjukWGOw0c0HGD6ftoVUXydqRXcLXUWd7Q0la4J5kYUFUojEyCpeTvVHrvnXT5wREKmogE76',
             'grant_type':'authorization_code',
-            'redirect_url':'http://127.0.0.1:8000/users/onlogin',
-            'code': code
+            'redirect_url':'http://127.0.0.1:3000/atlogin',
+            'code': code['code']
         }
         user_data=requests.post(url=url, data=parameters).json()
+        #return HttpResponse(str(user_data))
         access_token=user_data['access_token']
         headers={
             'Authorization' : 'Bearer '+access_token,
@@ -63,14 +64,18 @@ class UserViewSet(viewsets.ModelViewSet):
                     if user_data["student"]["currentYear"] >= 3:
                         is_admin = True
                     
-                    newUser=User(email=email,last_name=lastName,username=username,is_superuser=is_admin, first_name=firstName)
-                    newUser.save()
+                    newuser=User(email=email,last_name=lastName,username=username,is_superuser=is_admin, first_name=firstName)
+                    newuser.save()
+                    login(request=request, user=newuser)
                     return Response({"status": "user created", "access_token": access_token}, status=status.HTTP_202_ACCEPTED)
                 else:
                     return Response({"status": "not in IMG"}, status=status.HTTP_401_UNAUTHORIZED)
         # except User.DoesNotExist:
         #     pass
-        login(request=request, user=user)
+        #login(request=request, user=user)
+        # ur='http://localhost:3000/?id=2'
+        # return redirect(ur)
+        login(request, user)
         return Response({"status": "user exists", "access_token": access_token})
 class AppViewSet(viewsets.ModelViewSet):
     queryset=AppDetail.objects.all()

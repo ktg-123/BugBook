@@ -26,7 +26,6 @@ class BugDetail(models.Model):
     status=models.CharField(
         max_length=2,
         choices=bug_status,
-        blank=True,
         default='ns',
     )
     bug_type=(

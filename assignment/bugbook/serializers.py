@@ -26,7 +26,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class AppSerializer(serializers.ModelSerializer):
     #bugs=serializers.HyperlinkedRelatedField(many=True, view_name='bug-detail', read_only=True)
-    #team_members=UserDetailSerializer()
+    team_members=UserDetailSerializer(many=True)
     creator=serializers.ReadOnlyField(source='creator.username')
     class Meta:
         model=AppDetail

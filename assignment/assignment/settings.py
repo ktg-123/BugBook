@@ -40,13 +40,15 @@ INSTALLED_APPS = [
     'rest_framework',
     'bugbook.apps.BugbookConfig',
     'ckeditor',
-    'ckeditor_uploader'
+    'ckeditor_uploader',
+    'corsheaders'
 
 ]
 CKEDITOR_UPLOAD_PATH="uploads/"
 
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -55,8 +57,27 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
 
+CORS_ORIGIN_WHITELIST = (
+         'http://localhost:3000',
+         'http://localhost:8000',
+     )
+#CSRF_TRUSTED_ORIGINS = ['localhost:3000']
+
+CORS_ALLOW_CREDENTIALS=True
+CORS_ORIGIN_ALLOW_ALL = True
+     
 ROOT_URLCONF = 'assignment.urls'
+
 
 TEMPLATES = [
     {
@@ -75,7 +96,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'assignment.wsgi.application'
-
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
