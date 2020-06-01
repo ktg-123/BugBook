@@ -55,15 +55,17 @@ class AtLogin extends Component {
     
     render() {
         if(this.state.response==='img'){
-            return (<Redirect to={this.state.redirect} />)
+           
+            return (<Redirect to={this.state.redirect} exact/>)
+            //return <div>HI</div>
         }
         
         else if(this.state.response==='non-img'){
             alert('Sorry About being Non-Imgian')
-            return (<Redirect to={this.state.redirect} />)
+            return (<Redirect to={this.state.redirect} exact/>)
         }
        else{
-           return <div>{this.state.response}</div>
+           return <div>Loading ......</div>
        }
         // return(
 

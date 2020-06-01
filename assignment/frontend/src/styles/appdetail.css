@@ -7,3 +7,9 @@
     width:40%;
     margin-bottom:1rem;
 }
+.update-form{
+    margin:2rem;
+    border:1px solid black;
+    padding: 1rem;
+    border-radius: .5rem;
+}

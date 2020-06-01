@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'bugbook.apps.BugbookConfig',
     'ckeditor',
     'ckeditor_uploader',
-    'corsheaders'
+    'corsheaders',
 
 ]
 CKEDITOR_UPLOAD_PATH="uploads/"
@@ -66,16 +66,21 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     ),
 }
-
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
+# SESSION_COOKIE_HTTPONLY = False
+# SESSION_COOKIE_SAMESITE = None
+# CSRF_COOKIE_SAMESITE = None
 CORS_ORIGIN_WHITELIST = (
-         'http://localhost:3000',
-         'http://localhost:8000',
+         'http://127.0.0.1:8000',
+         'http://127.0.0.1:3000',
      )
-#CSRF_TRUSTED_ORIGINS = ['localhost:3000']
 
 CORS_ALLOW_CREDENTIALS=True
-CORS_ORIGIN_ALLOW_ALL = True
-     
+CORS_ORIGIN_ALLOW_ALL = False
+# SESSION_COOKIE_DOMAIN='http://localhost:3000'
+# SESSION_COOKIE_SECURE=True
+# SESSION_COOKIE_SITE=None
 ROOT_URLCONF = 'assignment.urls'
 
 
@@ -154,3 +159,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT=os.path.join(BASE_DIR,'static')
 MEDIA_URL='/media/'
 MEDIA_ROOT='/media/'
+
+#.eJxVjDsOgzAQBe-yNbIM2AinpOcM1n4MJolsCUMV5e4JEgW0b2beBzzuW_R7CatfBB7QQnXdCPkV0gHkiWnOinPa1oXUoaiTFjVmCe_hdG8HEUv81ySur51l0-pGJm1cT6bhSepO0BGjxU6jNha-P_TbMWY:1jfdM6:g-_7kpO-BNYu62Hd5QCnrR6gsD4
+#.eJxVjDsOgzAQBe-yNbIM2AinpOcM1n4MJolsCUMV5e4JEgW0b2beBzzuW_R7CatfBB7QQnXdCPkV0gHkiWnOinPa1oXUoaiTFjVmCe_hdG8HEUv81ySur51l0-pGJm1cT6bhSepO0BGjxU6jNha-P_TbMWY:1jfdMk:FXvbz-thEjiwj_BPLgEB-iCw7l0

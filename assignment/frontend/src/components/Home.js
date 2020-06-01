@@ -4,6 +4,7 @@ import '../styles/home.css'
 import Nav from './Nav'
 import {Link} from 'react-router-dom'
 import { Card } from 'semantic-ui-react'
+axios.defaults.withCredentials = true;
 class Home extends Component {
     constructor(props) {
         super(props)
@@ -13,7 +14,7 @@ class Home extends Component {
         }
     }
     componentDidMount(){
-        axios({url:'http://localhost:8000/apps/',
+        axios({url:'http://127.0.0.1:8000/apps/',
         method:'get',
         withCredentials:true,})
         .then(response=>{
@@ -22,6 +23,13 @@ class Home extends Component {
                 apps:response.data
             })
 
+        })
+        axios({url:'http://127.0.0.1:8000/',
+               withCredentials:true,
+               method:'get', 
+        })
+        .then(res=>{
+            console.log(res)
         })
     }
     render() {
@@ -40,7 +48,7 @@ class Home extends Component {
               <Card.Content>
               <Link style={appStyle} to={`/home/${app.id}`}>{app.app_name}</Link>
               </Card.Content>
-              <Card.Content extra>{app.creator} </Card.Content>
+              <Card.Content extra>By : {app.creator} </Card.Content>
               </Card>
               </div>
               )

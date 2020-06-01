@@ -1,0 +1,17 @@
+
+.page{
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+    margin:10rem 30rem 10rem 30rem;
+    border-radius: .5rem;
+    box-shadow: burlywood;
+    border:1px solid black;
+    padding-bottom:4rem;
+    background-color: peru;
+}
+.heading{
+    padding:2rem;
+    
+}

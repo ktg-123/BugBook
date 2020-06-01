@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
+import Nav from './Nav'
 
 class Dashboard extends Component {
     render() {
         return (
             <div>
-              Dashboard  
+            <div>
+              <Nav />  
+              </div>
+                
             </div>
         )
     }

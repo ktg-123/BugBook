@@ -7,6 +7,8 @@ import {BrowserRouter as Router, Switch, Route,} from 'react-router-dom'
 import AtLogin from './components/AtLogin';
 import Dashboard from './components/Dashboard';
 import AppDetail from './components/AppDetail'
+import BugDetail from './components/BugDetail';
+import Register from './components/Register'
 function App() {
   return (
     <Router>
@@ -17,6 +19,8 @@ function App() {
         <Route path='/dashboard' exact component={Dashboard} />
         <Route path='/home' exact component={Home} />
         <Route path='/home/:id' exact component={AppDetail} />
+        <Route path='/home/:id/:id' exact component={BugDetail} />
+        <Route path='/register' exact component={Register} />
       </Switch>
     </Router>
   );

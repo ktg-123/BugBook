@@ -4,6 +4,7 @@ import Nav from './Nav'
 import {Link} from 'react-router-dom'
 import { Header,Container, Message, Table, Segment } from 'semantic-ui-react'
 import '../styles/appdetail.css'
+import AppForm from './AppForm'
 class Home extends Component {
     constructor(props) {
         super(props)
@@ -17,12 +18,12 @@ class Home extends Component {
     }
     componentDidMount(){
        axios({
-           url:`http://localhost:8000/apps/${this.props.match.params.id}`,
+           url:`http://127.0.0.1:8000/apps/${this.props.match.params.id}`,
            method:'get',
            withCredentials:true,
        })
        .then(response=>{
-           console.log(response.data.team_members)
+        //    console.log(response.data.team_members)
 
            this.setState({
                appdetail:response.data,
@@ -30,35 +31,36 @@ class Home extends Component {
                
            })
        }).catch(error=>{
-           console.err(error)
+           console.log(error)
        })
        axios({
-        url:`http://localhost:8000/bugs/`,
+        url:`http://127.0.0.1:8000/bugs/`,
         method:'get',
         withCredentials:true,
     })
     .then(response=>{
-        console.log(response.data)
+        // console.log(response.data)
 
         this.setState({
 
             bugs:response.data
         })
     }).catch(error=>{
-        console.err(error)
+        console.log(error)
     })
 
 
     }
     render() {
-        console.log(this.state.appdetail.app_name)
+        // console.log(this.state.appdetail.app_name)
+        
         return (
             <div>
            <div>
            <Nav />
            </div>
            <div className="appdetail">
-            <Header as='h1' color='red'>{this.state.appdetail.app_name} </Header>
+            <Header size='huge' color='red'>{this.state.appdetail.app_name} </Header>
             <Header sub>Creator : {this.state.appdetail.creator} </Header><br />
             <Message>
             <Message.Header>About this project</Message.Header>
@@ -87,9 +89,11 @@ class Home extends Component {
                 </Table.Header>
                 <Table.Body>
                     {this.state.bugs.filter(bug=>(bug.app_name['app_name'])===(this.state.appdetail.app_name)).map(bug=>{
-                        return(<Table.Row key={bug.id}>
-                        <Table.Cell>{bug.id}</Table.Cell>
-                        <Table.Cell>{bug.bugtype}</Table.Cell>
+                        let type=(bug.bugtype==='d')? 'Defect' :'Enhancement'
+                        {/* let error=(type==='Defect')? 'red' :'' */}
+                        return(<Table.Row key={bug.id} >
+                        <Table.Cell><Link to={`/home/${this.state.appdetail.id}/${bug.id}`}>{bug.id}</Link></Table.Cell>
+                        <Table.Cell>{type}</Table.Cell>
                         <Table.Cell>{bug.summary}</Table.Cell>
                         <Table.Cell>{bug.creator}</Table.Cell>
                         <Table.Cell>{bug.status}</Table.Cell></Table.Row>)
@@ -99,6 +103,10 @@ class Home extends Component {
                     
                 </Table.Body>
                 </Table>
+                <br />
+                <div className="update-form" >
+                <AppForm btnText="Update" requestType="put" appId={this.state.appdetail.id} />
+                </div>    
             </div>
            </div>
            </div>

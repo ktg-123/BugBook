@@ -24,7 +24,7 @@ from django.shortcuts import redirect
 class UserViewSet(viewsets.ModelViewSet):
     queryset=User.objects.all()
     serializer_class=UserSerializer
-    #permission_classes=[permissions.IsAdminUser|ReadOnly]
+    # permission_classes=[permissions.IsAdminUser|ReadOnly]
     @action(methods=['post', 'options','get'], detail=False, url_name="onlogin", url_path="onlogin",permission_classes=[permissions.AllowAny,])
     def on_login(self,request):
         code=self.request.data
@@ -47,7 +47,7 @@ class UserViewSet(viewsets.ModelViewSet):
         }
         user_data=requests.get(url="https://internet.channeli.in/open_auth/get_user_data/", headers=headers).json()
         try:
-            user=User.objects.get(email = user_data["contactInformation"]["instituteWebmailAddress"])
+            exist_user=User.objects.get(email = user_data["contactInformation"]["instituteWebmailAddress"])
         except User.DoesNotExist:
                 img=False
                 is_admin=False
@@ -75,7 +75,7 @@ class UserViewSet(viewsets.ModelViewSet):
         #login(request=request, user=user)
         # ur='http://localhost:3000/?id=2'
         # return redirect(ur)
-        login(request, user)
+        login(request=request, user=exist_user)
         return Response({"status": "user exists", "access_token": access_token})
 class AppViewSet(viewsets.ModelViewSet):
     queryset=AppDetail.objects.all()
