@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import Nav from './Nav'
 import {Link} from 'react-router-dom'
-import { Header,Container, Message, Table, Segment } from 'semantic-ui-react'
+import { Header,Container, Message, Table, Segment, Button } from 'semantic-ui-react'
 import '../styles/appdetail.css'
 import AppForm from './AppForm'
+import ReactHtmlParser from 'react-html-parser';
 class Home extends Component {
     constructor(props) {
         super(props)
@@ -23,7 +24,7 @@ class Home extends Component {
            withCredentials:true,
        })
        .then(response=>{
-        //    console.log(response.data.team_members)
+           console.log(response.data.team_members)
 
            this.setState({
                appdetail:response.data,
@@ -53,7 +54,7 @@ class Home extends Component {
     }
     render() {
         // console.log(this.state.appdetail.app_name)
-        
+        const names=this.state.names
         return (
             <div>
            <div>
@@ -64,19 +65,21 @@ class Home extends Component {
             <Header sub>Creator : {this.state.appdetail.creator} </Header><br />
             <Message>
             <Message.Header>About this project</Message.Header>
-            <p>{this.state.appdetail.wiki}</p>
+            <p>{ReactHtmlParser(this.state.appdetail.wiki)}</p>
+            
             </Message>
             <div className="team">
             <Segment raised  color='orange'>
             <Header sub>Team Members</Header>
             <ul>
-            {this.state.team_members.map((team_member)=>
-            <li key={team_member.id}>{team_member.username}</li>
-            )}
+            {/* {this.state.team_members.map((team_member)=>{this.state.names.filter(name=>(name.id===team_member)).map(mem=><li key={team_member}>{mem.username}</li>)} */}
+            {this.state.team_members.map(team_member=><li key={team_member.id}>{team_member.username}</li>)}
+            
             </ul>
             </Segment>
             </div>
             <div className="bugs">
+            <Header as='h2' >Bug List</Header>
                 <Table celled fixed singleLine>
                 <Table.Header>
                     <Table.Row>
@@ -104,10 +107,16 @@ class Home extends Component {
                 </Table.Body>
                 </Table>
                 <br />
+                <Link to={`/reportbug/${this.state.appdetail.id}`}>
+                <Button color='red'>Report Bug</Button>
+                </Link>
+                <br />
                 <div className="update-form" >
+                <Header as='h3'>Update App Details</Header>
                 <AppForm btnText="Update" requestType="put" appId={this.state.appdetail.id} />
                 </div>    
             </div>
+            
            </div>
            </div>
         )

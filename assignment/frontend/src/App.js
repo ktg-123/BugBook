@@ -8,7 +8,8 @@ import AtLogin from './components/AtLogin';
 import Dashboard from './components/Dashboard';
 import AppDetail from './components/AppDetail'
 import BugDetail from './components/BugDetail';
-import Register from './components/Register'
+import Register from './components/Register';
+import ReportBug from './components/ReportBug'
 function App() {
   return (
     <Router>
@@ -21,6 +22,7 @@ function App() {
         <Route path='/home/:id' exact component={AppDetail} />
         <Route path='/home/:id/:id' exact component={BugDetail} />
         <Route path='/register' exact component={Register} />
+        <Route path='/reportbug/:id' exact component={ReportBug} />
       </Switch>
     </Router>
   );

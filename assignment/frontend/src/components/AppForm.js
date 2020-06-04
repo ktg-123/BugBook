@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import { Form } from 'semantic-ui-react'
 import axios from 'axios'
+import CKEditor from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import CKFinder from '@ckeditor/ckeditor5-ckfinder/src/ckfinder';
+axios.defaults.xsrfCookieName = 'csrftoken'
+axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 class AppForm extends Component {
     constructor(props) {
         super(props)
@@ -11,6 +16,7 @@ class AppForm extends Component {
              data:{
                  app_name:'',
                  team_members:[],
+                 wiki:''
              }
         }
     }
@@ -22,7 +28,7 @@ class AppForm extends Component {
            withCredentials:true,
         })
         .then(response=>{
-                console.log(response)
+                //console.log(response)
                 this.setState({
                     members:response.data
                 })
@@ -38,9 +44,12 @@ class AppForm extends Component {
             }
         })
     }
+    
     handleSubmit=(event, requestType, appId)=>{
         event.preventDefault()
-        //console.log(this.state.data)  
+        console.log(this.state.data)
+        const team_members=this.state.detail_members.map(str=>JSON.parse(str))
+        console.log(team_members)
         switch(requestType){
             case 'post':
                     axios({
@@ -49,10 +58,11 @@ class AppForm extends Component {
                         withCredentials:true,
                         data:{
                             app_name:this.state.data.app_name,
-                            team_members:this.state.data.team_members,
-                        }
+                            team_members:team_members,
+                        },
                     }).then(response=>console.log(response))
                     .catch(err=>console.log(err))
+                    break
             case 'put':
                 axios({
                     method:'put',
@@ -60,7 +70,8 @@ class AppForm extends Component {
                     withCredentials:true,
                     data:{
                         app_name:this.state.data.app_name,
-                        team_members:this.state.data.team_members,
+                        team_members:team_members
+                        //team_members:this.state.data.team_members,
                     }
                 }).then(response=>console.log(response))
                 .catch(err=>console.log(err))
@@ -68,7 +79,8 @@ class AppForm extends Component {
     }
     render() {
         const maintainers=this.state.members.map(user=>({
-            value:JSON.stringify({id:user.id, team_members:user.username}),
+            //value:user.id,
+             value:JSON.stringify({id:user.id, username:user.username}),
             text:user.first_name,
         }))
         return (
@@ -78,6 +90,7 @@ class AppForm extends Component {
                     this.props.requestType,
                     this.props.appId
                 )}>
+                
                     <Form.Field required 
                     placeholder="Enter App Name" 
                     control='input'
@@ -98,13 +111,36 @@ class AppForm extends Component {
                         onChange={(event, { value }) => {
                             this.setState({
                              detail_members:value,
-                             data:{
-                                 ...this.state.data,
-                                 team_members:this.state.detail_members.map((str)=>JSON.parse(str))
-                             }   
+                             
                             })
                         }}
                     />
+                    <CKEditor
+                    editor={ClassicEditor}
+                //Not addinng the image option due to complexity of UploaderAdapter
+                //     config={{
+                // ckfinder: {
+                //   // Upload the images to the server using the CKFinder QuickUpload command.  
+                //   uploadUrl: "http://127.0.0.1:8000/media/uploads/",
+                //   options: {
+                //     resourceType: "Images",
+                //   },
+                // },
+                // }}
+                    onChange={ ( event, editor ) => {
+                        const data = editor.getData();
+                        console.log( this.state );
+                        this.setState({
+                                data:{
+                                    ...this.state.data,
+                                    wiki:data
+                                }
+                             
+                            })
+
+                    } } 
+                    /> 
+                    <br />
                     <Form.Field control='button' type="submit">
                         {this.props.btnText}
                     </Form.Field> 

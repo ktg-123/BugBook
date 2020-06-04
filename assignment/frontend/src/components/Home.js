@@ -4,7 +4,8 @@ import '../styles/home.css'
 import Nav from './Nav'
 import {Link} from 'react-router-dom'
 import { Card } from 'semantic-ui-react'
-axios.defaults.withCredentials = true;
+axios.defaults.xsrfCookieName = 'csrftoken'
+axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 class Home extends Component {
     constructor(props) {
         super(props)

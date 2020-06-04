@@ -17,7 +17,9 @@ class UserDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
         fields=('id','username')
-
+        extra_kwargs = {
+            'username': {'validators': []},
+        }
 class UserSerializer(serializers.ModelSerializer):
     #apps=serializers.HyperlinkedRelatedField(many=True, view_name='app-detail', read_only=True)
     class Meta:
@@ -31,7 +33,21 @@ class AppSerializer(serializers.ModelSerializer):
     class Meta:
         model=AppDetail
         fields=['id','app_name','creator','team_members','test_date','wiki']
-        #depth=1
+        # depth=1
+    
+    # def create(self, validated_data):
+    #     profile_data = validated_data.pop('team_members')
+    #     user = AppDetail.objects.create(**validated_data)
+    #     User.objects.create(user=user, **profile_data)
+    #     return user    
+    # def create(self, validated_data):
+    #     choice_validated_data = validated_data.pop('team_members')
+    #     question = AppDetail.objects.create(**validated_data)
+    #     choice_set_serializer = self.fields['team_members']
+    #     for each in choice_validated_data:
+    #         each['question'] = question
+    #     choices = choice_set_serializer.create(choice_validated_data)
+    #     return question
 
 class BugSerializer(serializers.ModelSerializer):
     app_name=AppDetailSerializer() # Nested Serializer
@@ -39,7 +55,7 @@ class BugSerializer(serializers.ModelSerializer):
     class Meta:
         model=BugDetail
         fields=['id','creator','app_name','summary','status','bugtype','description','report_date']
-        #depth=1
+        # depth=1
 class CommentSerializer(serializers.ModelSerializer):
     bug=BugDetailSerializer() # Nested Serializer
     creator=serializers.ReadOnlyField(source='creator.username')

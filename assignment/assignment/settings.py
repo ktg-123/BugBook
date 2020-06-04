@@ -158,7 +158,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT=os.path.join(BASE_DIR,'static')
 MEDIA_URL='/media/'
-MEDIA_ROOT='/media/'
+MEDIA_ROOT='media/'
 
-#.eJxVjDsOgzAQBe-yNbIM2AinpOcM1n4MJolsCUMV5e4JEgW0b2beBzzuW_R7CatfBB7QQnXdCPkV0gHkiWnOinPa1oXUoaiTFjVmCe_hdG8HEUv81ySur51l0-pGJm1cT6bhSepO0BGjxU6jNha-P_TbMWY:1jfdM6:g-_7kpO-BNYu62Hd5QCnrR6gsD4
-#.eJxVjDsOgzAQBe-yNbIM2AinpOcM1n4MJolsCUMV5e4JEgW0b2beBzzuW_R7CatfBB7QQnXdCPkV0gHkiWnOinPa1oXUoaiTFjVmCe_hdG8HEUv81ySur51l0-pGJm1cT6bhSepO0BGjxU6jNha-P_TbMWY:1jfdMk:FXvbz-thEjiwj_BPLgEB-iCw7l0

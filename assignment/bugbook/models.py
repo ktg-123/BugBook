@@ -26,7 +26,9 @@ class BugDetail(models.Model):
     status=models.CharField(
         max_length=2,
         choices=bug_status,
-        default='ns',
+        default=bug_status[2][1],
+        blank=True,
+        #null=True,
     )
     bug_type=(
         ('d','defect'),
@@ -36,7 +38,7 @@ class BugDetail(models.Model):
         max_length=1,
         choices=bug_type,
     )
-    description=RichTextField()
+    description=RichTextUploadingField()
     report_date=models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return "%s by %s" % (self.summary ,self.creator)

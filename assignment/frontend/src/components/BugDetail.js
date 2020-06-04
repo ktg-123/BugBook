@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { Header, Segment } from 'semantic-ui-react'
 import Nav from './Nav'
+import BugForm from './BugForm'
 
 class BugDetail extends Component {
     constructor(props) {
@@ -9,6 +10,7 @@ class BugDetail extends Component {
     
         this.state = {
              bugdetail:'',
+             app:'',
         }
         //console.log(this.props.match)
     }
@@ -19,17 +21,31 @@ class BugDetail extends Component {
             withCredentials:true,
         })
         .then(response=>{
-            console.log(response.data)
+            
             this.setState({
-                bugdetail:response.data
+                bugdetail:response.data,
+                app:response.data.app_name,
             })
+            //console.log(this.state.app.id)
         }
-        )
+        ).catch(error=>console.log(error))
+        
     }
     render() {
+        //console.log(this.state.app.id)
+        console.log(this.state.app.id)
+        console.log(this.props.match)
+        //console.log(id)
+        
         const bugstyle={
             margin:'1rem',
             
+        }
+        const updateforn={
+            margin:'1rem',
+            border:'1px solid black',
+            padding:'1rem',
+
         }
         const type=(this.state.bugdetail.bugtype==='d')? 'Defect' :'Enhancement'
         return (
@@ -47,6 +63,9 @@ class BugDetail extends Component {
                 <br />
                 <Header sub color='violet'>Current Status : {this.state.bugdetail.status} </Header>
                 <Header sub color='red'>Bug Type  : {type   } </Header><br />
+            </div>
+            <div style={updateforn}>
+            {this.state.app.id?<BugForm  appId={`${this.state.app.id}`} requestType="put" btnText="Update Bug" bugId={this.props.match.params.id}/>:''}
             </div>
             </div>
         )

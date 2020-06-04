@@ -76,6 +76,8 @@ class UserViewSet(viewsets.ModelViewSet):
         # ur='http://localhost:3000/?id=2'
         # return redirect(ur)
         login(request=request, user=exist_user)
+        # request.session.save()
+        # return HttpResponse(str(request.session))
         return Response({"status": "user exists", "access_token": access_token})
 class AppViewSet(viewsets.ModelViewSet):
     queryset=AppDetail.objects.all()
