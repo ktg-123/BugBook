@@ -9,6 +9,7 @@ class AppDetail(models.Model):
     creator=models.ForeignKey(User,related_name='app', on_delete=models.CASCADE)
     team_members=models.ManyToManyField(User)
     test_date=models.DateTimeField(auto_now_add=True)
+    
     #icon=models.ImageField('')
     wiki=RichTextUploadingField()
     def __str__(self):
@@ -17,6 +18,7 @@ class AppDetail(models.Model):
 class BugDetail(models.Model):
     creator=models.ForeignKey(User,related_name='bug', on_delete=models.CASCADE)
     app_name=models.ForeignKey(AppDetail,on_delete=models.CASCADE)
+    #assigned_to=models.ForeignKey(User,related_name='member', on_delete=models.CASCADE, blank=True, default='1')
     summary=models.CharField(max_length=250)
     bug_status=(
         ('r','Resolved'),
@@ -44,7 +46,7 @@ class BugDetail(models.Model):
         return "%s by %s" % (self.summary ,self.creator)
 
 class Comment(models.Model):
-    bug=models.ForeignKey(BugDetail,on_delete=models.CASCADE,blank=True,default='')
+    bug=models.ForeignKey(BugDetail,on_delete=models.CASCADE)
     creator=models.ForeignKey(User,related_name='comment', on_delete=models.CASCADE)
     description=RichTextUploadingField()
     comment_date=models.DateTimeField(auto_now_add=True)

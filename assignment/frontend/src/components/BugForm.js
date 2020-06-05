@@ -172,9 +172,9 @@ class BugForm extends Component {
                             })
                         }}
                     /> */}
-                    <Form.Field control='button' type="submit">
-                        {this.props.btnText}
-                    </Form.Field> 
+                        <Form.Field control='button' type="submit">
+                            {this.props.btnText}
+                        </Form.Field> 
                 </Form>
             </div>
         )

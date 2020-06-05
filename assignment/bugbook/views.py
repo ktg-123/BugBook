@@ -5,11 +5,11 @@ from rest_framework.decorators import api_view, action
 from rest_framework import viewsets, permissions , status
 from rest_framework.reverse import reverse
 from django.contrib.auth.models import User
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from rest_framework.response import Response
 from .permissions import IsOwnerOrReadOnly, ReadOnly, IsTeamOrReadOnly
 import json, requests
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
 # Create your views here.
 # @api_view(['GET'])
@@ -28,6 +28,7 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(methods=['post', 'options','get'], detail=False, url_name="onlogin", url_path="onlogin",permission_classes=[permissions.AllowAny,])
     def on_login(self,request):
         code=self.request.data
+        # code=self.request.query_params.get('code')
         #return HttpResponse(str(code))
         
         url='https://internet.channeli.in/open_auth/token/'
@@ -36,7 +37,8 @@ class UserViewSet(viewsets.ModelViewSet):
             'client_secret':'JTF7T932HGebemZAbncwAxeQPVfuf8bVUfeRz8sSe4tRiVEl87x02goOdjukWGOw0c0HGD6ftoVUXydqRXcLXUWd7Q0la4J5kYUFUojEyCpeTvVHrvnXT5wREKmogE76',
             'grant_type':'authorization_code',
             'redirect_url':'http://127.0.0.1:3000/atlogin',
-            'code': code['code']
+            'code': code['code'],
+            # 'code': code
         }
         user_data=requests.post(url=url, data=parameters).json()
         #return HttpResponse(str(user_data))
@@ -61,10 +63,12 @@ class UserViewSet(viewsets.ModelViewSet):
                     firstName = name[0]
                     lastName = name[1]
                     username=name[0]
+                    is_staff=True
+                    is_active=True
                     if user_data["student"]["currentYear"] >= 3:
                         is_admin = True
                     
-                    newuser=User(email=email,last_name=lastName,username=username,is_superuser=is_admin, first_name=firstName)
+                    newuser=User(email=email,last_name=lastName,username=username,is_superuser=is_admin, first_name=firstName, is_staff=is_staff, is_active=is_active)
                     newuser.save()
                     login(request=request, user=newuser)
                     return Response({"status": "user created", "access_token": access_token}, status=status.HTTP_202_ACCEPTED)
@@ -76,15 +80,38 @@ class UserViewSet(viewsets.ModelViewSet):
         # ur='http://localhost:3000/?id=2'
         # return redirect(ur)
         login(request=request, user=exist_user)
-        # request.session.save()
+        #request.session.modified=True
         # return HttpResponse(str(request.session))
         return Response({"status": "user exists", "access_token": access_token})
+    
+    
+    @action(methods=['post', 'options','get'], detail=False, url_name="reqlogin", url_path="reqlogin")
+    def req_login(self, request):
+        id=request.user
+        user=UserSerializer(id)
+        return Response(user.data)
+    
+    
+    
+    @action(methods=['post', 'options','get'],detail=False, url_name="onlogout", url_path="onlogout")
+    def on_logout(self,request):
+
+        logout(request=request)
+        return redirect('http://127.0.0.1:3000/')
+
 class AppViewSet(viewsets.ModelViewSet):
     queryset=AppDetail.objects.all()
     serializer_class=AppSerializer
     permission_classes=[permissions.IsAuthenticatedOrReadOnly, IsTeamOrReadOnly|IsOwnerOrReadOnly|permissions.IsAdminUser]
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
+    
+    @action(methods=['post', 'options','get'], detail=False, url_name="getapps", url_path="getapps")
+    def get_apps(self, request):    
+        created_apps=AppDetail.objects.filter(creator=request.user)
+        serialize=AppSerializer(created_apps, many=True)
+        return Response(serialize.data)
+
 
 class BugViewSet(viewsets.ModelViewSet):
     queryset=BugDetail.objects.all()
@@ -99,3 +126,4 @@ class CommentViewSet(viewsets.ModelViewSet):
     permission_classes=[permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
+

@@ -65,7 +65,7 @@ class BugDetail extends Component {
                 <Header sub color='red'>Bug Type  : {type   } </Header><br />
             </div>
             <div style={updateforn}>
-            {this.state.app.id?<BugForm  appId={`${this.state.app.id}`} requestType="put" btnText="Update Bug" bugId={this.props.match.params.id}/>:''}
+            {/* {this.state.app.id?<BugForm  appId={`${this.state.app.id}`} requestType="put" btnText="Update Bug" bugId={this.props.match.params.id}/>:''} */}
             </div>
             </div>
         )

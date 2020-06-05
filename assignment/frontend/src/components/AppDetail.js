@@ -79,7 +79,7 @@ class Home extends Component {
             </Segment>
             </div>
             <div className="bugs">
-            <Header as='h2' >Bug List</Header>
+            <Header as='h2' >Bugs</Header>
                 <Table celled fixed singleLine>
                 <Table.Header>
                     <Table.Row>

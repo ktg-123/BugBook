@@ -10,6 +10,8 @@ import AppDetail from './components/AppDetail'
 import BugDetail from './components/BugDetail';
 import Register from './components/Register';
 import ReportBug from './components/ReportBug'
+import AdminView from './components/AdminView';
+import EditForm from './components/EditForm'
 function App() {
   return (
     <Router>
@@ -23,6 +25,8 @@ function App() {
         <Route path='/home/:id/:id' exact component={BugDetail} />
         <Route path='/register' exact component={Register} />
         <Route path='/reportbug/:id' exact component={ReportBug} />
+        <Route path='/adminview' exact component={AdminView} />
+        <Route path='/adminview/:id' exact component={EditForm} />
       </Switch>
     </Router>
   );

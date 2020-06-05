@@ -59,6 +59,7 @@ class AppForm extends Component {
                         data:{
                             app_name:this.state.data.app_name,
                             team_members:team_members,
+                            wiki:this.state.data.wiki,
                         },
                     }).then(response=>console.log(response))
                     .catch(err=>console.log(err))
@@ -70,7 +71,8 @@ class AppForm extends Component {
                     withCredentials:true,
                     data:{
                         app_name:this.state.data.app_name,
-                        team_members:team_members
+                        team_members:team_members,
+                        wiki:this.state.data.wiki,
                         //team_members:this.state.data.team_members,
                     }
                 }).then(response=>console.log(response))
@@ -115,6 +117,7 @@ class AppForm extends Component {
                             })
                         }}
                     />
+                    <Form.Field label="Wiki" required></Form.Field>
                     <CKEditor
                     editor={ClassicEditor}
                 //Not addinng the image option due to complexity of UploaderAdapter

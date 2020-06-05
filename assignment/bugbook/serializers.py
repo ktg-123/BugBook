@@ -1,6 +1,9 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import AppDetail, BugDetail, Comment
+from drf_writable_nested.serializers import WritableNestedModelSerializer
+
+
 
 class AppDetailSerializer(serializers.ModelSerializer):
 
@@ -26,7 +29,7 @@ class UserSerializer(serializers.ModelSerializer):
         model=User
         fields=['id', 'username', 'is_staff', 'is_active', 'is_superuser','email','first_name','last_name']
 
-class AppSerializer(serializers.ModelSerializer):
+class AppSerializer(WritableNestedModelSerializer):
     #bugs=serializers.HyperlinkedRelatedField(many=True, view_name='bug-detail', read_only=True)
     team_members=UserDetailSerializer(many=True)
     creator=serializers.ReadOnlyField(source='creator.username')
@@ -49,14 +52,14 @@ class AppSerializer(serializers.ModelSerializer):
     #     choices = choice_set_serializer.create(choice_validated_data)
     #     return question
 
-class BugSerializer(serializers.ModelSerializer):
+class BugSerializer(WritableNestedModelSerializer):
     app_name=AppDetailSerializer() # Nested Serializer
     creator=serializers.ReadOnlyField(source='creator.username')
     class Meta:
         model=BugDetail
         fields=['id','creator','app_name','summary','status','bugtype','description','report_date']
         # depth=1
-class CommentSerializer(serializers.ModelSerializer):
+class CommentSerializer(WritableNestedModelSerializer):
     bug=BugDetailSerializer() # Nested Serializer
     creator=serializers.ReadOnlyField(source='creator.username')
     class Meta:
