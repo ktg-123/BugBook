@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import Nav from './Nav'
+
 import { Card, Segment, Grid } from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 class AdminView extends Component {
@@ -32,9 +32,7 @@ class AdminView extends Component {
         }
         return (
             <div>
-            <div>
-                <Nav />
-            </div>    
+               
             <div style={bodyStyle}>
                 <Grid columns={3} divided>
                     {this.state.users.map(user=>{

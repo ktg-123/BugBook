@@ -12,6 +12,7 @@ class AtLogin extends Component {
              response:'',
              redirect:'',
         }
+        this.handleLogIn=this.handleLogIn.bind(this)
         
     }
     
@@ -33,6 +34,7 @@ class AtLogin extends Component {
                 
                 if(res.data.status==="user exists"||res.data.status==="user created"){
                     //console.log('Hacked')
+                    
                     this.setState({
                         redirect:'/home',
                         response:'img'
@@ -52,27 +54,25 @@ class AtLogin extends Component {
         
         }
     }
-    
+    handleLogIn(){
+        window.location="http://127.0.0.1:8000/users/afterlogin"
+    }
     render() {
         if(this.state.response==='img'){
            
-            return (<Redirect to={this.state.redirect} exact/>)
+            window.location="http://127.0.0.1:8000/users/afterlogin"
+            return (<Redirect exact to={this.state.redirect} />)
             //return <div>HI</div>
         }
         
         else if(this.state.response==='non-img'){
             alert('Sorry About being Non-Imgian')
-            return (<Redirect to={this.state.redirect} exact/>)
+            return (<Redirect exact to={this.state.redirect} />)
         }
        else{
            return <div>Loading ......</div>
        }
-        // return(
-
-        //     <div>
-        //             return (<Redirect to='/home' />)    
-        //     </div>
-        // )
+       
     }
 }
 

@@ -25,18 +25,6 @@ class Home extends Component {
             })
 
         })
-        axios({
-            url:'http://127.0.0.1:8000/users/reqlogin/',
-            method:'get',
-            withCredentials:true,
-        }).then(response=>{
-            axios({
-                url:`http://127.0.0.1:8000/users/${response.data}`,
-                method:'get',
-                withCredentials:true,
-            }).then(res=>console.log(res))
-        
-        })
 
     }
     

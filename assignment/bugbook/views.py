@@ -91,7 +91,12 @@ class UserViewSet(viewsets.ModelViewSet):
         user=UserSerializer(id)
         return Response(user.data)
     
-    
+    @action(methods=['post', 'options','get'],detail=False, url_name="afterlogin", url_path="afterlogin")
+    def after_login(self,request):
+
+        
+        return redirect('http://127.0.0.1:3000/home')
+
     
     @action(methods=['post', 'options','get'],detail=False, url_name="onlogout", url_path="onlogout")
     def on_logout(self,request):

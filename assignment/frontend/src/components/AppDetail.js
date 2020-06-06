@@ -13,18 +13,29 @@ class Home extends Component {
         this.state = {
              appdetail:'',
              team_members:[],
-             bugs:[]
+             bugs:[],
+             info:'',
         }
         
     }
-    componentDidMount(){
+    componentDidMount(){axios({
+        url:'http://127.0.0.1:8000/users/reqlogin/',
+        method:'get',
+        withCredentials:true,
+    }).then(response=>{
+        
+        this.setState({
+                        info:response.data
+                    })
+    })
+
        axios({
            url:`http://127.0.0.1:8000/apps/${this.props.match.params.id}`,
            method:'get',
            withCredentials:true,
        })
        .then(response=>{
-           console.log(response.data.team_members)
+        
 
            this.setState({
                appdetail:response.data,
@@ -40,7 +51,7 @@ class Home extends Component {
         withCredentials:true,
     })
     .then(response=>{
-        // console.log(response.data)
+        
 
         this.setState({
 
@@ -50,10 +61,28 @@ class Home extends Component {
         console.log(error)
     })
 
+    
+
 
     }
+    
     render() {
-        // console.log(this.state.appdetail.app_name)
+        
+        const obj={
+            id:this.state.info.id,
+            username:this.state.info.username
+        }
+        var checkteam=this.state.team_members.some(elem =>{
+            return JSON.stringify(obj) === JSON.stringify(elem);
+          });
+        console.log(obj)
+        console.log(this.state.team_members)
+        const val=(this.state.info.username===this.state.appdetail.creator||checkteam)
+        const element=val?<div className="update-form" >
+                        <Header as='h3'>Update App Details</Header>
+                        <AppForm btnText="Update" requestType="put" appId={this.state.appdetail.id} />
+                        </div>
+                        :<div></div>
         const names=this.state.names
         return (
             <div>
@@ -72,7 +101,7 @@ class Home extends Component {
             <Segment raised  color='orange'>
             <Header sub>Team Members</Header>
             <ul>
-            {/* {this.state.team_members.map((team_member)=>{this.state.names.filter(name=>(name.id===team_member)).map(mem=><li key={team_member}>{mem.username}</li>)} */}
+            
             {this.state.team_members.map(team_member=><li key={team_member.id}>{team_member.username}</li>)}
             
             </ul>
@@ -111,12 +140,9 @@ class Home extends Component {
                 <Button color='red'>Report Bug</Button>
                 </Link>
                 <br />
-                <div className="update-form" >
-                <Header as='h3'>Update App Details</Header>
-                <AppForm btnText="Update" requestType="put" appId={this.state.appdetail.id} />
-                </div>    
+                    
             </div>
-            
+            {element}
            </div>
            </div>
         )

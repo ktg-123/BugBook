@@ -22,11 +22,11 @@ class EditForm extends Component {
     
     componentDidMount(){
         axios({
-            url:`http://127.0.0.1:8000/users/${this.props.match.params.id}`,
+            url:`http://127.0.0.1:8000/users/${this.props.id}`,
             method:'get',
             withCredentials:true,
         }).then(response=>{
-            console.log(response.data)
+            console.log(response)
             const res=response.data
             this.setState({
                 data:{
@@ -46,7 +46,7 @@ class EditForm extends Component {
         event.preventDefault()
         console.log(this.state.data)
         axios({
-            url:`http://127.0.0.1:8000/users/${this.props.match.params.id}/`,
+            url:`http://127.0.0.1:8000/users/${this.props.id}/`,
             method:'put',
             withCredentials:true,
             data:{
@@ -65,9 +65,7 @@ class EditForm extends Component {
     render() {
         return (
             <div>
-               <div>
-                <Nav />
-                </div>
+               
                 <div>
                     <Form onSubmit={(event)=>this.handleSubmit(
                         event
