@@ -18,7 +18,7 @@ class AppDetail(models.Model):
 class BugDetail(models.Model):
     creator=models.ForeignKey(User,related_name='bug', on_delete=models.CASCADE)
     app_name=models.ForeignKey(AppDetail,on_delete=models.CASCADE)
-    #assigned_to=models.ForeignKey(User,related_name='member', on_delete=models.CASCADE, blank=True, default='1')
+    #   assigned_to=models.ForeignKey(User,related_name='member', on_delete=models.CASCADE, blank=True, default='1')
     summary=models.CharField(max_length=250)
     bug_status=(
         ('r','Resolved'),

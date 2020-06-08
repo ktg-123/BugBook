@@ -121,7 +121,7 @@ class AppViewSet(viewsets.ModelViewSet):
 class BugViewSet(viewsets.ModelViewSet):
     queryset=BugDetail.objects.all()
     serializer_class=BugSerializer
-    permission_classes=[permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    permission_classes=[permissions.IsAuthenticatedOrReadOnly]
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
 

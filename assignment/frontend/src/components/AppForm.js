@@ -16,8 +16,10 @@ class AppForm extends Component {
              data:{
                  app_name:'',
                  team_members:[],
-                 wiki:''
-             }
+                 wiki:'',
+                 
+             },
+             postData:''
         }
     }
     
@@ -46,7 +48,7 @@ class AppForm extends Component {
     }
     
     handleSubmit=(event, requestType, appId)=>{
-        event.preventDefault()
+        
         console.log(this.state.data)
         const team_members=this.state.detail_members.map(str=>JSON.parse(str))
         console.log(team_members)
@@ -61,7 +63,10 @@ class AppForm extends Component {
                             team_members:team_members,
                             wiki:this.state.data.wiki,
                         },
-                    }).then(response=>console.log(response))
+                    }).then(response=>{
+                        console.log(response)
+                        window.location.reload()
+                    })
                     .catch(err=>console.log(err))
                     break
             case 'put':
@@ -75,8 +80,12 @@ class AppForm extends Component {
                         wiki:this.state.data.wiki,
                         //team_members:this.state.data.team_members,
                     }
-                }).then(response=>console.log(response))
+                }).then(response=>{
+                    console.log(response)
+                    window.location.reload()
+                })
                 .catch(err=>console.log(err))
+                
         }
     }
     render() {
@@ -132,7 +141,7 @@ class AppForm extends Component {
                 // }}
                     onChange={ ( event, editor ) => {
                         const data = editor.getData();
-                        console.log( this.state );
+                        // console.log( this.state );
                         this.setState({
                                 data:{
                                     ...this.state.data,

@@ -46,7 +46,7 @@ class BugForm extends Component {
         })
     }
     handleSubmit=(event, requestType, bugId)=>{
-        event.preventDefault()
+        
         console.log(this.state.data)
         switch(requestType){
             case 'post':
@@ -56,13 +56,18 @@ class BugForm extends Component {
                         withCredentials:true,
                         data:{
                             app_name:{
-                                id:this.state.appdetail.app_name,
-                                app_name:this.state.appdetail.id
+                                id:this.state.appdetail.id,
+                                app_name:this.state.appdetail.app_name
                             },
                             bugtype:this.state.data.bug_type,
                             summary:this.state.data.summary,
+                            status:"ns",
+                            description:this.state.data.description
                         },
-                    }).then(response=>console.log(response))
+                    }).then(response=>{
+                        console.log(response)
+                        window.location.reload()
+                    })
                     .catch(err=>console.log(err))
                     break
             case 'put':
