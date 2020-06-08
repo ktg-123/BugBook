@@ -6,6 +6,7 @@ import BugForm from './BugForm'
 import ReactHTMLParser from 'react-html-parser'
 import BugUpdate from './BugUpdate'
 
+import CommentList from './CommentList'
 class BugDetail extends Component {
     constructor(props) {
         super(props)
@@ -38,8 +39,8 @@ class BugDetail extends Component {
     render() {
        
         //console.log(this.state.app.id)
-        console.log(this.state.app.id)
-        console.log(this.props.match)
+        // console.log(this.state.app.id)
+        // console.log(this.props.match)
         //console.log(id)
         
         const bugstyle={
@@ -82,6 +83,10 @@ class BugDetail extends Component {
             <div style={updateforn}>
             {this.state.bugdetail.id?<BugUpdate id={this.state.bugdetail.id} />:''}
             {/* {this.state.app.id?<BugForm  appId={`${this.state.app.id}`} requestType="put" btnText="Update Bug" bugId={this.props.match.params.id}/>:''} */}
+            </div>
+            <div className="comments">
+               {/* {this.state.bugdetail.id?<Comments id={this.state.bugdetail.id} />:''} */}
+               {this.state.bugdetail.id?<CommentList id={this.state.bugdetail.id} />:''}
             </div>
             </div>
         )

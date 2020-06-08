@@ -17,7 +17,7 @@ import {Form} from 'semantic-ui-react'
              method:'get',
              withCredentials:true
          }).then(response=>{
-             console.log(response)
+            //  console.log(response)
              this.setState({
                  bugInfo:response.data,
                  status:response.data.status

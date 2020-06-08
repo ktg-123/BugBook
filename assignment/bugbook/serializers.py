@@ -60,7 +60,7 @@ class BugSerializer(WritableNestedModelSerializer):
         fields=['id','creator','app_name','summary','status','bugtype','description','report_date']
         # depth=1
 class CommentSerializer(WritableNestedModelSerializer):
-    bug=BugDetailSerializer() # Nested Serializer
+    # bug=BugDetailSerializer() # Nested Serializer
     creator=serializers.ReadOnlyField(source='creator.username')
     class Meta:
         model=Comment
