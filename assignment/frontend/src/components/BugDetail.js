@@ -7,6 +7,7 @@ import ReactHTMLParser from 'react-html-parser'
 import BugUpdate from './BugUpdate'
 
 import CommentList from './CommentList'
+
 class BugDetail extends Component {
     constructor(props) {
         super(props)
@@ -16,7 +17,8 @@ class BugDetail extends Component {
              app:'',
              team_members:this.props.location.state.team_members,
              info:this.props.location.state.info,
-             creator:this.props.location.state.creator
+             creator:this.props.location.state.creator,
+             //id:this.props.location.state.creator_id,
         }
         //console.log(this.props.match)
         
@@ -49,7 +51,7 @@ class BugDetail extends Component {
         var checkteam=this.state.team_members.some(elem =>{
             return JSON.stringify(obj) === JSON.stringify(elem);
           });
-          const val=(this.state.info.username===this.state.creator.username||checkteam||this.state.info.is_superuser)
+          const val=(this.state.info.username===this.state.creator||checkteam||this.state.info.is_superuser)
         const bugstyle={
             margin:'1rem',
             
@@ -74,7 +76,11 @@ class BugDetail extends Component {
                             status='Resolved'
                         }
         const allteam=this.state.team_members
-        allteam.push(this.state.creator)
+        // const creator_user={
+        //     id:this.state.id,
+        //     username:this.state.creator
+        // }
+        // allteam.push(creator_user)
         const updateform=val?<div style={updateforn}>
         {this.state.bugdetail.id?<BugUpdate id={this.state.bugdetail.id} team={allteam}/>:''}
         

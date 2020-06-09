@@ -15,8 +15,10 @@ class Home extends Component {
              team_members:[],
              bugs:[],
              info:'',
-             creator:'',
+             creator_id:'',
+             
         }
+        
      this.deleteApp=this.deleteApp.bind(this)   
     }
     componentDidMount(){axios({
@@ -36,12 +38,18 @@ class Home extends Component {
            withCredentials:true,
        })
        .then(response=>{
-        
+            axios({
+                url:`http://127.0.0.1:8000/users/getid/?creator=${response.data.creator}`,
+                method:'get',
+                withCredentials:true
+            }).then(res=>this.setState({
+                creator_id:res
+            }))
 
            this.setState({
                appdetail:response.data,
                team_members:response.data.team_members,
-               creator:response.data.creator
+               
            })
        }).catch(error=>{
            console.log(error)
@@ -90,7 +98,7 @@ class Home extends Component {
           });
         console.log(obj)
         console.log(this.state.team_members)
-        const val=(this.state.info.username===this.state.creator.username||checkteam||this.state.info.is_superuser)
+        const val=(this.state.info.username===this.state.appdetail.creator||checkteam||this.state.info.is_superuser)
         const del=val?<Grid.Column><Button color='red' onClick={this.deleteApp}>Delete App</Button> </Grid.Column>:''
         const element=val?<div className="update-form" >
                         <Header as='h3'>Update App Details</Header>
@@ -102,7 +110,7 @@ class Home extends Component {
         <Grid.Column><Header size='huge' color='red'>{this.state.appdetail.app_name} </Header></Grid.Column>
         {del}
         </Grid>
-        <Header sub>Creator : {this.state.creator.username} </Header><br />
+        <Header sub>Creator : {this.state.appdetail.creator} </Header><br />
         <Message>
         <Message.Header>About this project</Message.Header>
         <p>{ReactHtmlParser(this.state.appdetail.wiki)}</p>
@@ -131,6 +139,7 @@ class Home extends Component {
                 </Table.Row>
             </Table.Header>
             <Table.Body>
+            
                 {this.state.bugs.filter(bug=>(bug.app_name['app_name'])===(this.state.appdetail.app_name)).map(bug=>{
                     let type=(bug.bugtype==='d')? 'Defect' :'Enhancement'
                     let status
@@ -148,9 +157,10 @@ class Home extends Component {
                     <Table.Cell><Link to={{
                         pathname:`/home/${this.state.appdetail.id}/${bug.id}`,
                         state:{
-                            creator:this.state.creator,
+                            creator:this.state.appdetail.creator,
                             team_members:this.state.team_members,
-                            info:this.state.info
+                            info:this.state.info,
+                            //creator_id:this.state.creator_id
                         }
                         
                         }

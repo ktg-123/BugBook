@@ -96,7 +96,12 @@ class UserViewSet(viewsets.ModelViewSet):
 
         
         return redirect('http://127.0.0.1:3000/home')
-
+    
+    @action(methods=['post', 'options','get'], detail=False, url_name="getid", url_path="getid")
+    def get_id(self, request):
+        info=self.request.query_params.get('creator')
+        user=User.objects.get(username=info)
+        return Response(user.id)
     
     @action(methods=['post', 'options','get'],detail=False, url_name="onlogout", url_path="onlogout")
     def on_logout(self,request):

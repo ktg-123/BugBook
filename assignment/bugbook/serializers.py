@@ -23,6 +23,8 @@ class UserDetailSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'username': {'validators': []},
         }
+
+        
 class UserSerializer(serializers.ModelSerializer):
     #apps=serializers.HyperlinkedRelatedField(many=True, view_name='app-detail', read_only=True)
     class Meta:
@@ -33,7 +35,7 @@ class AppSerializer(WritableNestedModelSerializer):
     #bugs=serializers.HyperlinkedRelatedField(many=True, view_name='bug-detail', read_only=True)
     team_members=UserDetailSerializer(many=True)
     creator=serializers.ReadOnlyField(source='creator.username')
-    creator=UserDetailSerializer()
+    
     class Meta:
         model=AppDetail
         fields=['id','app_name','creator','team_members','test_date','wiki']

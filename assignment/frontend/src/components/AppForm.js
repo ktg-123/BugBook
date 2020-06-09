@@ -19,7 +19,8 @@ class AppForm extends Component {
                  wiki:'',
                  
              },
-             postData:''
+             postData:'',
+             info:''
         }
     }
     
@@ -33,6 +34,18 @@ class AppForm extends Component {
                 //console.log(response)
                 this.setState({
                     members:response.data
+                })
+            }
+        ).catch(err=>console.log(err))
+        axios({
+            url:`http://127.0.0.1:8000/users/reqlogin`,
+           method:'get',
+           withCredentials:true,
+        })
+        .then(response=>{
+                //console.log(response)
+                this.setState({
+                    info:response.data
                 })
             }
         ).catch(err=>console.log(err))
@@ -59,6 +72,10 @@ class AppForm extends Component {
                         url:'http://127.0.0.1:8000/apps/',
                         withCredentials:true,
                         data:{
+                            creator:{
+                                id:this.state.info.id,
+                                username:this.state.info.username
+                            },
                             app_name:this.state.data.app_name,
                             team_members:team_members,
                             wiki:this.state.data.wiki,
@@ -71,7 +88,7 @@ class AppForm extends Component {
                     break
             case 'put':
                 axios({
-                    method:'put',
+                    method:'patch',
                     url:`http://127.0.0.1:8000/apps/${appId}/`,
                     withCredentials:true,
                     data:{
