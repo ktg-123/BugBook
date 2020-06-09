@@ -58,7 +58,10 @@ class EditForm extends Component {
                 "first_name": this.state.data.first_name,
                 "last_name": this.state.data.last_name
             }
-        }).then(response=>console.log(response))
+        }).then(response=>{
+            console.log(response)
+            window.location.reload()
+        })
         .catch(error=>console.log(error))
 
     }

@@ -44,7 +44,7 @@ class Home extends Component {
               <Card.Content>
               <Link style={appStyle} to={`/home/${app.id}`}>{app.app_name}</Link>
               </Card.Content>
-              <Card.Content extra>By : {app.creator} </Card.Content>
+              <Card.Content extra>By : {app.creator.username} </Card.Content>
               </Card>
               </div>
               )

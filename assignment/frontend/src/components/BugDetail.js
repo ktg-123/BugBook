@@ -14,6 +14,9 @@ class BugDetail extends Component {
         this.state = {
              bugdetail:'',
              app:'',
+             team_members:this.props.location.state.team_members,
+             info:this.props.location.state.info,
+             creator:this.props.location.state.creator
         }
         //console.log(this.props.match)
         
@@ -33,16 +36,20 @@ class BugDetail extends Component {
             //console.log(this.state.app.id)
         }
         ).catch(error=>console.log(error))
-        
+        // console.log(this.props.location.state)
     }
     
     render() {
        
-        //console.log(this.state.app.id)
-        // console.log(this.state.app.id)
-        // console.log(this.props.match)
-        //console.log(id)
+        const obj={
+            id:this.state.info.id,
+            username:this.state.info.username
+        }
         
+        var checkteam=this.state.team_members.some(elem =>{
+            return JSON.stringify(obj) === JSON.stringify(elem);
+          });
+          const val=(this.state.info.username===this.state.creator.username||checkteam||this.state.info.is_superuser)
         const bugstyle={
             margin:'1rem',
             
@@ -53,6 +60,8 @@ class BugDetail extends Component {
             padding:'1rem',
 
         }
+
+       
         const type=(this.state.bugdetail.bugtype==='d')? 'Defect' :'Enhancement'
         let status
                         if(this.state.bugdetail.status=='ns'){
@@ -64,6 +73,14 @@ class BugDetail extends Component {
                         else{
                             status='Resolved'
                         }
+        const allteam=this.state.team_members
+        allteam.push(this.state.creator)
+        const updateform=val?<div style={updateforn}>
+        {this.state.bugdetail.id?<BugUpdate id={this.state.bugdetail.id} team={allteam}/>:''}
+        
+        </div>:''
+        //console.log(allteam)
+        //console.log(allteam)
         return (
             <div>
             <div>
@@ -80,10 +97,7 @@ class BugDetail extends Component {
                 <Header sub color='violet'>Current Status : {status} </Header>
                 <Header sub color='red'>Bug Type  : {type   } </Header><br />
             </div>
-            <div style={updateforn}>
-            {this.state.bugdetail.id?<BugUpdate id={this.state.bugdetail.id} />:''}
-            {/* {this.state.app.id?<BugForm  appId={`${this.state.app.id}`} requestType="put" btnText="Update Bug" bugId={this.props.match.params.id}/>:''} */}
-            </div>
+            {updateform}
             <div className="comments">
                {/* {this.state.bugdetail.id?<Comments id={this.state.bugdetail.id} />:''} */}
                {this.state.bugdetail.id?<CommentList id={this.state.bugdetail.id} />:''}

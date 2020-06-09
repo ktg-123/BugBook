@@ -7,7 +7,8 @@ import {Form} from 'semantic-ui-react'
      
          this.state = {
              bugInfo:'' ,
-             status:''
+             status:'',
+             assign_to:'',
          }
          this.handleStatus=this.handleStatus.bind(this)
      }
@@ -20,9 +21,11 @@ import {Form} from 'semantic-ui-react'
             //  console.log(response)
              this.setState({
                  bugInfo:response.data,
-                 status:response.data.status
+                 status:response.data.status,
+                 assign_to:response.data.assigned_to
              })
          })
+          console.log(this.props)
      }
     handleStatus(event, id){
         axios({
@@ -30,14 +33,20 @@ import {Form} from 'semantic-ui-react'
             method:'patch',
             withCredentials:true,
             data:{
-                status:this.state.status
+                status:this.state.status,
+                assigned_to:this.state.assign_to
             }
         }).then(res=>{
             window.location.reload()
         })
     }
     render() {
-
+        let team_members=[...new Set(this.props.team)]
+        console.log(team_members)
+        const team=team_members.map(member=>({
+            value:member.id,
+            text:member.username
+        }))
         const status=[
             {
                 value:'ns',
@@ -68,6 +77,19 @@ import {Form} from 'semantic-ui-react'
                     onChange={(event, { value }) => {
                             this.setState({
                                 status:value
+                             
+                            })
+                        }}
+            />
+            <Form.Dropdown required
+                    placeholder='Select a member'
+                    selection
+                    label="Assign to:"
+                    value={this.state.assign_to}
+                    options={team}
+                    onChange={(event, { value }) => {
+                            this.setState({
+                                assign_to:value
                              
                             })
                         }}

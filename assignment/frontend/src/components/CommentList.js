@@ -46,7 +46,7 @@ class CommentList extends Component {
             withCredentials:true,
             
         }).then(response=>{
-            console.log(response)
+            //console.log(response)
             //console.log(response.data[0].bug)
             this.setState({
                 user:response.data
@@ -73,7 +73,7 @@ class CommentList extends Component {
 
     }
     render() {
-        let postdata=<div>
+        let postdata=<div className="comment-post">
         <form>
             <textarea id="chat-log" cols="100" rows="5"></textarea><br />
 
@@ -90,7 +90,7 @@ class CommentList extends Component {
             
             
                 {this.state.comments.filter(comment=>comment.bug===this.props.id).map(comment=>{
-                    return(<div className='com'>
+                    return(<div className='com' id={comment.id}>
                         <Comment key={comment.id}>
                     <Comment.Content>
                     <Comment.Author>

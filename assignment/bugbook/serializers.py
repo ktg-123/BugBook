@@ -33,6 +33,7 @@ class AppSerializer(WritableNestedModelSerializer):
     #bugs=serializers.HyperlinkedRelatedField(many=True, view_name='bug-detail', read_only=True)
     team_members=UserDetailSerializer(many=True)
     creator=serializers.ReadOnlyField(source='creator.username')
+    creator=UserDetailSerializer()
     class Meta:
         model=AppDetail
         fields=['id','app_name','creator','team_members','test_date','wiki']
@@ -57,7 +58,7 @@ class BugSerializer(WritableNestedModelSerializer):
     creator=serializers.ReadOnlyField(source='creator.username')
     class Meta:
         model=BugDetail
-        fields=['id','creator','app_name','summary','status','bugtype','description','report_date']
+        fields=['id','creator','app_name','summary','status','bugtype','assigned_to','description','report_date']
         # depth=1
 class CommentSerializer(WritableNestedModelSerializer):
     # bug=BugDetailSerializer() # Nested Serializer
