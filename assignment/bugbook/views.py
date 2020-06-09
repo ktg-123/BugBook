@@ -136,7 +136,7 @@ def send_email2(response):
     app_name=response['app_name']
     email = EmailMessage(
         'IMG Testing Notification',
-        ('A bug has been reported in your app  '+app_name ),
+        ('A bug has been reported in your app   '+app_name ),
         'khandelwal.kunal12@gmail.com',
         [user.email]
     )
