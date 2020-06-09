@@ -11,6 +11,7 @@ from .permissions import IsOwnerOrReadOnly, ReadOnly, IsTeamOrReadOnly
 import json, requests
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
+from django.core.mail import EmailMessage
 # Create your views here.
 # @api_view(['GET'])
 # def api_root(request, format=None):
@@ -109,10 +110,54 @@ class UserViewSet(viewsets.ModelViewSet):
         logout(request=request)
         return redirect('http://127.0.0.1:3000/')
 
+def send_email(response):
+    #return response
+    
+    #app=AppDetail.objects.get(id=id)
+    
+    recievers = []
+    for user in User.objects.all():
+        recievers.append(user.email)
+    email = EmailMessage(
+        'IMG Testing Notification',
+        ('Hey All Now a new Testing app is availabel........ Pls Test and report as many bugs as possible in  '+ response['app_name']),
+        'khandelwal.kunal12@gmail.com',
+        recievers
+    )
+
+    email.send()
+
+def send_email2(response):
+
+    id=response['id']
+    App=AppDetail.objects.get(id=id)
+    creator = App.creator
+    user=User.objects.get(username=creator)
+    app_name=response['app_name']
+    email = EmailMessage(
+        'IMG Testing Notification',
+        ('A bug has been reported in your app  '+app_name ),
+        'khandelwal.kunal12@gmail.com',
+        [user.email]
+    )
+
+    email.send()
+
 class AppViewSet(viewsets.ModelViewSet):
     queryset=AppDetail.objects.all()
     serializer_class=AppSerializer
     permission_classes=[permissions.IsAuthenticatedOrReadOnly, IsTeamOrReadOnly|IsOwnerOrReadOnly|permissions.IsAdminUser]
+    
+    
+    def create(self,request, *args, **kwargs):
+        response = super(AppViewSet, self).create(request, *args, **kwargs)
+        if response:
+           
+           print(response.data)
+           send_email(response.data)  # sending mail
+        # return res
+        return response
+
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
     
@@ -129,7 +174,11 @@ class BugViewSet(viewsets.ModelViewSet):
     permission_classes=[permissions.IsAuthenticatedOrReadOnly]
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)
-
+    def create(self, request, *args, **kwargs):
+        response = super(BugViewSet, self).create(request, *args, **kwargs)
+        print((response.data)['app_name']['id'])
+        send_email2((response.data)['app_name'])  # sending mail
+        return response
 class CommentViewSet(viewsets.ModelViewSet):
     queryset=Comment.objects.all()
     serializer_class=CommentSerializer
