@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Nav from './Nav'
 import axios from 'axios'
 import { Form, Checkbox } from 'semantic-ui-react'
+
+
 class EditForm extends Component {
     constructor(props) {
         super(props)

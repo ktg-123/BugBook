@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import queryString from 'query-string'
 import {Redirect} from 'react-router-dom'
+
 
 class AtLogin extends Component {
     
@@ -18,7 +18,7 @@ class AtLogin extends Component {
     
     componentDidMount(){
         
-        //const parameters=queryString.parse(this.props.location.search)
+        
         
         if(this.state.response===''){
             const parameters=new URLSearchParams(window.location.search).get('code')
@@ -33,13 +33,13 @@ class AtLogin extends Component {
             .then((res)=>{
                 
                 if(res.data.status==="user exists"||res.data.status==="user created"){
-                    //console.log('Hacked')
+                    
                     
                     this.setState({
                         redirect:'/home',
                         response:'img'
                     })
-                    //console.log(this.state.response)
+                    
                 }
                 else if(res.data.status==="not in IMG"){
                     this.setState({
@@ -47,7 +47,7 @@ class AtLogin extends Component {
                         response:'non-img'
                     })
                 }
-                //console.log(res.headers)
+                
             })
         
 
@@ -62,7 +62,7 @@ class AtLogin extends Component {
            
             window.location="http://127.0.0.1:8000/users/afterlogin"
             return (<Redirect exact to={this.state.redirect} />)
-            //return <div>HI</div>
+            
         }
         
         else if(this.state.response==='non-img'){

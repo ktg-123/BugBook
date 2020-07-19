@@ -3,6 +3,8 @@ import AdminView from './AdminView'
 import { Segment } from 'semantic-ui-react'
 import Nav from './Nav'
 import axios from 'axios'
+
+
 class Admin extends Component {
     constructor(props) {
         super(props)

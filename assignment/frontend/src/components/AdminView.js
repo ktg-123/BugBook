@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-
 import { Card, Segment, Grid } from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
+
+
 class AdminView extends Component {
     constructor(props) {
         super(props)

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import {Form} from 'semantic-ui-react'
+
+
  class BugUpdate extends Component {
      constructor(props) {
          super(props)
@@ -18,7 +20,7 @@ import {Form} from 'semantic-ui-react'
              method:'get',
              withCredentials:true
          }).then(response=>{
-            //  console.log(response)
+            
              this.setState({
                  bugInfo:response.data,
                  status:response.data.status,

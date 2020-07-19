@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import '../styles/nav.css'
 import {Link} from 'react-router-dom'
 import {Header, Button} from 'semantic-ui-react'
+
+
 class Nav extends Component {
     constructor(props) {
         super(props)

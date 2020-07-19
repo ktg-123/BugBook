@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 import { Button, Header } from 'semantic-ui-react'
 import '../styles/login.css'
+
 class Login extends Component {
     
     redirect(){

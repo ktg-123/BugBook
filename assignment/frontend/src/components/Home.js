@@ -6,6 +6,8 @@ import {Link} from 'react-router-dom'
 import { Card } from 'semantic-ui-react'
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+
+
 class Home extends Component {
     constructor(props) {
         super(props)
@@ -19,7 +21,7 @@ class Home extends Component {
         method:'get',
         withCredentials:true,})
         .then(response=>{
-            //console.log(response)
+            
             this.setState({
                 apps:response.data
             })

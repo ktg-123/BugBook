@@ -3,8 +3,8 @@ import axios from 'axios'
 import { Comment, Header } from 'semantic-ui-react'
 import ReactHtmlParser from 'react-html-parser';
 import '../styles/comment.css'
-import CKEditor from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+
 class CommentList extends Component {
     constructor(props) {
         super(props)
@@ -34,7 +34,7 @@ class CommentList extends Component {
             
         }).then(response=>{
             
-            //console.log(response.data[0].bug)
+           
             this.setState({
                 comments:response.data
             })
@@ -46,8 +46,7 @@ class CommentList extends Component {
             withCredentials:true,
             
         }).then(response=>{
-            //console.log(response)
-            //console.log(response.data[0].bug)
+           
             this.setState({
                 user:response.data
             })
@@ -67,7 +66,7 @@ class CommentList extends Component {
         messageInputDom.value = '';
     }
     keyUp = (e) => {
-        if (e.keyCode === 13) {  // enter, return
+        if (e.keyCode === 13) {  
             document.querySelector('#chat-message-submit').click();
         }
 

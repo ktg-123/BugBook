@@ -5,6 +5,8 @@ import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+
+
 class BugForm extends Component {
     constructor(props) {
         super(props)
@@ -103,14 +105,7 @@ class BugForm extends Component {
                     this.props.bugId
                 )}>
                 
-                    {/* <Form.Field required 
-                    placeholder="Enter App Name" 
-                    control='input'
-                    label='App Name'
-                    name='app_name'
-                    value={this.state.data.app_name} 
-                    onChange={event=>{this.handleChange(event)}}
-                    /> */}
+                   
                     <Form.Field
                     control='input'
                     label='App Name'
@@ -161,22 +156,7 @@ class BugForm extends Component {
                     } } 
                     />   
                     <br />
-                    {/* <Form.Dropdown
-                        placeholder="Select the Project Makers"
-                        search
-                        required
-                        multiple
-                        selection
-                        label="Maintainers:"
-                        value={this.state.detail_members}
-                        options={maintainers}
-                        onChange={(event, { value }) => {
-                            this.setState({
-                             detail_members:value,
-                             
-                            })
-                        }}
-                    /> */}
+                   
                         <Form.Field control='button' type="submit">
                             {this.props.btnText}
                         </Form.Field> 

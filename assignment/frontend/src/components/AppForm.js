@@ -6,6 +6,8 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 // import CKFinder from '@ckeditor/ckeditor5-ckfinder/src/ckfinder';
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+
+
 class AppForm extends Component {
     constructor(props) {
         super(props)
@@ -31,7 +33,7 @@ class AppForm extends Component {
            withCredentials:true,
         })
         .then(response=>{
-                //console.log(response)
+                
                 this.setState({
                     members:response.data
                 })
@@ -43,7 +45,7 @@ class AppForm extends Component {
            withCredentials:true,
         })
         .then(response=>{
-                //console.log(response)
+                
                 this.setState({
                     info:response.data
                 })
@@ -82,7 +84,7 @@ class AppForm extends Component {
                         },
                     }).then(response=>{
                         console.log(response)
-                       // window.location.reload()
+                
                     })
                     .catch(err=>console.log(err))
                     break
@@ -95,7 +97,7 @@ class AppForm extends Component {
                         app_name:this.state.data.app_name,
                         team_members:team_members,
                         wiki:this.state.data.wiki,
-                        //team_members:this.state.data.team_members,
+                
                     }
                 }).then(response=>{
                     console.log(response)
@@ -107,7 +109,7 @@ class AppForm extends Component {
     }
     render() {
         const maintainers=this.state.members.map(user=>({
-            //value:user.id,
+            
              value:JSON.stringify({id:user.id, username:user.username}),
             text:user.first_name,
         }))
@@ -146,16 +148,7 @@ class AppForm extends Component {
                     <Form.Field label="Wiki" required></Form.Field>
                     <CKEditor
                     editor={ClassicEditor}
-                //Not addinng the image option due to complexity of UploaderAdapter
-                //     config={{
-                // ckfinder: {
-                //   // Upload the images to the server using the CKFinder QuickUpload command.  
-                //   uploadUrl: "http://127.0.0.1:8000/media/uploads/",
-                //   options: {
-                //     resourceType: "Images",
-                //   },
-                // },
-                // }}
+               
                     onChange={ ( event, editor ) => {
                         const data = editor.getData();
                         // console.log( this.state );

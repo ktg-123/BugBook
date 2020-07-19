@@ -5,7 +5,6 @@ import Nav from './Nav'
 import BugForm from './BugForm'
 import ReactHTMLParser from 'react-html-parser'
 import BugUpdate from './BugUpdate'
-
 import CommentList from './CommentList'
 
 class BugDetail extends Component {
@@ -18,9 +17,9 @@ class BugDetail extends Component {
              team_members:this.props.location.state.team_members,
              info:this.props.location.state.info,
              creator:this.props.location.state.creator,
-             //id:this.props.location.state.creator_id,
+       
         }
-        //console.log(this.props.match)
+       
         
     }
     componentDidMount(){
@@ -35,10 +34,10 @@ class BugDetail extends Component {
                 bugdetail:response.data,
                 app:response.data.app_name,
             })
-            //console.log(this.state.app.id)
+            
         }
         ).catch(error=>console.log(error))
-        // console.log(this.props.location.state)
+       
     }
     
     render() {
@@ -76,17 +75,12 @@ class BugDetail extends Component {
                             status='Resolved'
                         }
         const allteam=this.state.team_members
-        // const creator_user={
-        //     id:this.state.id,
-        //     username:this.state.creator
-        // }
-        // allteam.push(creator_user)
+        
         const updateform=val?<div style={updateforn}>
         {this.state.bugdetail.id?<BugUpdate id={this.state.bugdetail.id} team={allteam}/>:''}
         
         </div>:''
-        //console.log(allteam)
-        //console.log(allteam)
+        
         return (
             <div>
             <div>
@@ -105,7 +99,7 @@ class BugDetail extends Component {
             </div>
             {updateform}
             <div className="comments">
-               {/* {this.state.bugdetail.id?<Comments id={this.state.bugdetail.id} />:''} */}
+               
                {this.state.bugdetail.id?<CommentList id={this.state.bugdetail.id} />:''}
             </div>
             </div>

@@ -6,6 +6,8 @@ import { Header,Container, Message, Table, Segment, Button, Grid } from 'semanti
 import '../styles/appdetail.css'
 import AppForm from './AppForm'
 import ReactHtmlParser from 'react-html-parser';
+
+
 class Home extends Component {
     constructor(props) {
         super(props)
