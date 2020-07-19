@@ -27,6 +27,7 @@ can add their projects, delete them, report issues and discuss these issues with
 - `$ npm install` . All frontend dependencies are installed.
 
 4. Migrate Files
+- `$ cd ../assignment`.In settings.py make changes to appropiate username and password for Email.
 - `$ cd ..`
 - `$ python3 manage.py makemigrations`
 - `$ python3 manage.py migrate`
