@@ -21,19 +21,19 @@ can add their projects, delete them, report issues and discuss these issues with
 - `$ source <env_name>/bin/activate` 
     Virtual Environment is set up and activated
 
-3. Install requirements `$ cd ./assignment/assignment`
+3. Install requirements `$ cd ./assignment`
 - `$ pip3 install requirements.txt` . Install all Backend dependencies.
-- `$ cd ../frontend`
+- `$ cd frontend`
 - `$ npm install` . All frontend dependencies are installed.
 
 4. Migrate Files
-- `$ cd ../assignment`
+- `$ cd ..`
 - `$ python3 manage.py makemigrations`
 - `$ python3 manage.py migrate`
 5. Start the Backend Server
 - `$ python3 manage.py runserver`
 6. Start the frontend server
-- `$ cd ../frontend`
+- `$ cd frontend`
 - `$ sudo npm start`
 7. Open Browser
 - Enter the URL `http://127.0.0.1:3000/`.
