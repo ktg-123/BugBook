@@ -27,11 +27,13 @@ can add their projects, delete them, report issues and discuss these issues with
 - `$ npm install` . All frontend dependencies are installed.
 
 4. Migrate Files
-- `$ cd ../assignment`.In settings.py make changes to appropiate username and password for Email.
+- `$ cd ../assignment`
+- In settings.py make changes to appropiate username and password for Email and also for the MYSQL database enter the user and password .
 - `$ cd ..`
 - `$ python3 manage.py makemigrations`
 - `$ python3 manage.py migrate`
 5. Start the Backend Server
+- `$ sudo systemctl start redis`
 - `$ python3 manage.py runserver`
 6. Start the frontend server
 - `$ cd frontend`
