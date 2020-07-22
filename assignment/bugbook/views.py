@@ -12,15 +12,7 @@ import json, requests
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.core.mail import EmailMessage
-# Create your views here.
-# @api_view(['GET'])
-# def api_root(request, format=None):
-#     return Response({
-#         'users': reverse('user-list', request=request, format=format),
-#         'apps':reverse('app-list', request=request, format=format)
-#         'bugs':reverse('bug-list', request=request, format=format)
-#         'comments':reverse('comment-list', request=request, format=format)
-#     })
+
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset=User.objects.all()
@@ -29,8 +21,7 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(methods=['post', 'options','get'], detail=False, url_name="onlogin", url_path="onlogin",permission_classes=[permissions.AllowAny,])
     def on_login(self,request):
         code=self.request.data
-        # code=self.request.query_params.get('code')
-        #return HttpResponse(str(code))
+    
         
         url='https://internet.channeli.in/open_auth/token/'
         parameters={
@@ -42,7 +33,7 @@ class UserViewSet(viewsets.ModelViewSet):
             # 'code': code
         }
         user_data=requests.post(url=url, data=parameters).json()
-        #return HttpResponse(str(user_data))
+    
         access_token=user_data['access_token']
         headers={
             'Authorization' : 'Bearer '+access_token,
@@ -75,14 +66,9 @@ class UserViewSet(viewsets.ModelViewSet):
                     return Response({"status": "user created", "access_token": access_token}, status=status.HTTP_202_ACCEPTED)
                 else:
                     return Response({"status": "not in IMG"}, status=status.HTTP_401_UNAUTHORIZED)
-        # except User.DoesNotExist:
-        #     pass
-        #login(request=request, user=user)
-        # ur='http://localhost:3000/?id=2'
-        # return redirect(ur)
+    
         login(request=request, user=exist_user)
-        #request.session.modified=True
-        # return HttpResponse(str(request.session))
+        
         return Response({"status": "user exists", "access_token": access_token})
     
     
@@ -111,9 +97,7 @@ class UserViewSet(viewsets.ModelViewSet):
         return redirect('http://127.0.0.1:3000/')
 
 def send_email(response):
-    #return response
     
-    #app=AppDetail.objects.get(id=id)
     
     recievers = []
     for user in User.objects.all():

@@ -74,11 +74,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     ),
 }
-# CSRF_COOKIE_SECURE = True
-# SESSION_COOKIE_SECURE = True
-# SESSION_COOKIE_HTTPONLY = False
-# SESSION_COOKIE_SAMESITE = None
-# CSRF_COOKIE_SAMESITE = None
+
 CORS_ORIGIN_WHITELIST = (
          'http://127.0.0.1:8000',
          'http://127.0.0.1:3000',
@@ -86,9 +82,7 @@ CORS_ORIGIN_WHITELIST = (
 
 CORS_ALLOW_CREDENTIALS=True
 CORS_ORIGIN_ALLOW_ALL = False
-# SESSION_COOKIE_DOMAIN='http://localhost:3000'
-# SESSION_COOKIE_SECURE=True
-# SESSION_COOKIE_SITE=None
+
 ROOT_URLCONF = 'assignment.urls'
 
 
@@ -126,8 +120,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'bugbook',
-        'USER': 'root',
-        'PASSWORD': 'mathspower',
+        'USER': '####',
+        'PASSWORD': '######',
         'HOST': 'localhost', 
         'PORT': '3306',
 
