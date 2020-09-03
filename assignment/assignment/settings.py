@@ -121,7 +121,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'bugbook',
         'USER': 'root',
-        'PASSWORD': 'mathspower',
+        'PASSWORD': '##',
         'HOST': 'db', 
         'PORT': '3306',
 
