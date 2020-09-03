@@ -8,40 +8,29 @@ can add their projects, delete them, report issues and discuss these issues with
 - python3
 - pip
 - npm packages
-- virtualenv
+- docker
+- mysql
 
 # Build and Run
 1. Clone the repository
 - `$ git clone https://github.com/ktg-123/BugBook.git `
 - `$ cd BugBook`
 
-2. Set-up Virtual env
-- `$ sudo apt-get install python3-venv`
-- `$ python3 -m venv <env_name>`
-- `$ source <env_name>/bin/activate` 
-    Virtual Environment is set up and activated
+2. Make changes for mysql user in docker-compose.yaml
 
-3. Install requirements `$ cd ./assignment`
-- `$ pip3 install requirements.txt` . Install all Backend dependencies.
-- `$ cd frontend`
-- `$ npm install` . All frontend dependencies are installed.
+3. Make changes for email and mysql in assignment/assignment/settings.py
 
-4. Migrate Files
-- `$ cd ../assignment`
-- In settings.py make changes to appropiate username and password for Email and also for the MYSQL database enter the user and password .
-- `$ cd ..`
-- `$ python3 manage.py makemigrations`
-- `$ python3 manage.py migrate`
-5. Start the Backend Server
-- `$ sudo systemctl start redis`
-- `$ python3 manage.py runserver`
-6. Start the frontend server
-- `$ cd frontend`
-- `$ sudo npm start`
-7. Open Browser
+4. Make sure that port 8000, 3000 and 6379 are not in use.
+
+5. Run docker commands
+- `$ sudo docker-compose build`
+- `$ sudo docker-compose up -d`
+
+6. Open Browser
 - Enter the URL `http://127.0.0.1:3000/`.
 - Login with Channeli Credentials.
 - Then you will be redirected to `http://127.0.0.1:3000/home`
 - Now Report your Bugs or Add your Project.
 
+7. To switch it down Run `$ sudo docker-compose down`
     
