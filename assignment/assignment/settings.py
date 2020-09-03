@@ -109,7 +109,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
+            "hosts": [('redis', 6379)],
         },
     },
 }
@@ -120,9 +120,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'bugbook',
-        'USER': '####',
-        'PASSWORD': '######',
-        'HOST': 'localhost', 
+        'USER': 'root',
+        'PASSWORD': 'mathspower',
+        'HOST': 'db', 
         'PORT': '3306',
 
     }
