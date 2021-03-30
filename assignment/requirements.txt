@@ -17,6 +17,6 @@ drf-writable-nested==0.6.0
 hiredis==1.0.1
 msgpack==0.6.2
 mysqlclient==1.4.6
-Pygments==2.6.1
+Pygments==2.7.4
 
 
